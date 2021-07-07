@@ -198,12 +198,14 @@ test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
 		printf "0000"
 	} >input &&
 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
-	depacketize <output >output.raw &&
+	test-tool pkt-line unpack <output >actual &&
 
-	# just pick out the value of main, which avoids any protocol
-	# particulars
-	perl -lne "print \$1 if m{^(\\S+) refs/heads/main}" <output.raw >actual &&
-	git -C "$repo" rev-parse main >expect &&
+	cat >expect <<-EOF &&
+	$(git rev-parse HEAD) HEAD
+	$(git rev-parse refs/heads/main) refs/heads/main
+	0000
+	EOF
+
 	test_cmp expect actual
 '
 

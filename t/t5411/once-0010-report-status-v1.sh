@@ -34,13 +34,13 @@ test_expect_success "proc-receive: report status v1" '
 				$A $B | packetize
 		fi &&
 		printf "%s %s refs/for/main/topic1\n" \
-			$ZERO_OID $A | packetize &&
+			$ZERO_OID $A | test-tool pkt-line pack &&
 		printf "%s %s refs/heads/foo\n" \
-			$ZERO_OID $A | packetize &&
+			$ZERO_OID $A | test-tool pkt-line pack &&
 		printf "%s %s refs/for/next/topic\n" \
-			$ZERO_OID $A | packetize &&
+			$ZERO_OID $A | test-tool pkt-line pack &&
 		printf "%s %s refs/for/main/topic2\n" \
-			$ZERO_OID $A | packetize &&
+			$ZERO_OID $A | test-tool pkt-line pack &&
 		printf 0000 &&
 		printf "" | git -C "$upstream" pack-objects --stdout
 	} | git receive-pack "$upstream" --stateless-rpc \
