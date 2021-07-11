@@ -595,6 +595,9 @@ of a delete/create pair.
 	specified number.  Defaults to diff.renameLimit, or if that is
 	also unspecified, to 400.
 
+	Note that for backward compatibility reasons, a value of 0 is treated
+	the same as if 32767 was passed.
+
 ifndef::git-format-patch[]
 --diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]::
 	Select only files that are Added (`A`), Copied (`C`),
