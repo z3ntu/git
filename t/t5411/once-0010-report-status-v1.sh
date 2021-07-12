@@ -28,10 +28,10 @@ test_expect_success "proc-receive: report status v1" '
 		if test -z "$GIT_DEFAULT_HASH" || test "$GIT_DEFAULT_HASH" = "sha1"
 		then
 			printf "%s %s refs/heads/main\0report-status\n" \
-				$A $B | packetize
+				$A $B | test-tool pkt-line pack-raw-stdin
 		else
 			printf "%s %s refs/heads/main\0report-status object-format=$GIT_DEFAULT_HASH\n" \
-				$A $B | packetize
+				$A $B | test-tool pkt-line pack-raw-stdin
 		fi &&
 		printf "%s %s refs/for/main/topic1\n" \
 			$ZERO_OID $A | test-tool pkt-line pack &&
