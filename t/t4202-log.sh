@@ -1905,6 +1905,15 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
 	test_must_fail git log --exclude-promisor-objects source-a
 '
 
+test_expect_success 'log --decorate includes lightweight and annotated tags' '
+	cat >expect <<-\EOF &&
+	three HEAD -> source-b, tag: three, tag: source-tag
+	one tag: one
+	EOF
+	git log --format="%s %D" >actual &&
+	test_cmp expect actual
+'
+
 test_expect_success 'log --end-of-options' '
        git update-ref refs/heads/--source HEAD &&
        git log --end-of-options --source >actual &&
