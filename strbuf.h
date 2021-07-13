@@ -425,6 +425,12 @@ void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
  * with modifiers (e.g. %Ez) are passed to `strftime`.
  * `suppress_tz_name`, when set, expands %Z internally to the empty
  * string rather than passing it to `strftime`.
+ *
+ * Note: The omission of "__attribute__((format (strftime, [...])))"
+ * is intentional. As noted above we take %z and %Z which aren't
+ * portable. It would "work" anyway on modern compilers, but since
+ * this is mainly used in date.c (via "git log --date=<format>") we
+ * don't have any constant formats to check.
  */
 void strbuf_addftime(struct strbuf *sb, const char *fmt,
 		    const struct tm *tm, int tz_offset,
